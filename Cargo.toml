@@ -1,0 +1,40 @@
+[package]
+name = "window-topmost"
+version = "1.0.0"
+edition = "2021"
+authors = ["幽浮喵 (猫娘工程师)"]
+description = "Windows 窗口置顶工具 - 使用快捷键让窗口置顶"
+
+[dependencies]
+# Windows API 绑定
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Shell",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_Graphics_Gdi",
+    "Win32_System_LibraryLoader",
+    "Win32_System_Diagnostics_Debug",
+] }
+
+# 配置文件解析
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.8"
+
+# 错误处理
+anyhow = "1.0"
+
+# 日志（可选，调试用）
+# log = "0.4"
+# env_logger = "0.10"
+
+[profile.release]
+opt-level = "z"     # 优化体积
+lto = true          # 链接时优化
+codegen-units = 1   # 单代码生成单元
+panic = "abort"     # 减小体积
+strip = true        # 移除符号
+
+[build-dependencies]
+# Windows 资源文件编译（图标等）
+winres = "0.1"
